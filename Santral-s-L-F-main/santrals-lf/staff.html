@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header class="text-white">
+        <div class="container-fluid header-bg p-4">
+            <div class="row">
+                <div class="col my-auto mx-auto">
+                    <h1>Santral's L&F</h1>
+                </div>
+                <div class="col-auto ">
+                    <img src="img/bilgi-logotype-en-light.png" alt="#" class="bilgi-logo">
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation and Search Bar -->
+        <div class="container-fluid bg-menu p-4">
+            <div class="row">
+                <div class="col buttons h5">
+                    <!-- User icon and navigation links -->
+                    <button>
+                        <i class="bi bi-person-circle me-1 h1"></i>
+                    </button>
+                    <a href="myrequests.html">My Requests</a>
+                    <a href="L&FOffice.html">L&F Office</a>
+                    <button class="bi bi-chat-dots-fill me-1 h5" data-bs-dismiss="modal" id="textStudentBtn">
+                        
+                    </button>
+                </div>
+
+                <!-- Search input and button -->
+                <div class="search col-auto p-1">
+                    <input type="text" class="search-input me-1 p-2" id="searchInput" placeholder="Search...">
+                    <button class="search-btn" id="searchBtn"><i class="bi bi-search me-1 h4"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Request and Sort By Section -->
+        <div class="container mt-3">
+            <div class="row">
+                <!-- Button to add a new request -->
+                <div class="col-auto">
+                    <button id="addRequestBtn" class="btn btn-secondary custom-btn"><i class="bi bi-plus"></i>Add Request</button>
+                </div>
+
+                <!-- Dropdown for sorting requests -->
+                <div class="col-auto ms-auto">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle custom-btn" type="button" id="sortByBtn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Sort By
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="sortByBtn">
+                            <a class="dropdown-item" href="#" id="sortByDateLost">Date Lost</a>
+                            <a class="dropdown-item" href="#" id="sortByDateFound">Date Added</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Request List Container -->
+        <div class="container mt-3 " id="requestsContainer">
+            <ul id="requestList" class="list-group">
+                <!-- List items will be dynamically added here -->
+            </ul>
+        </div>
+    </header>
+
+    <!-- Add Request Modal -->
+    <div class="modal fade" id="addRequestModal" tabindex="-1" aria-labelledby="addRequestModalLabel" aria-hidden="true">
+        <!-- Modal content for adding a new request -->
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addRequestModalLabel">Add Request</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form inputs for the new request -->
+                    <div class="mb-3">
+                        <label for="itemName">Item Name</label>
+                        <input type="text" class="form-control" id="itemName" required onkeydown="moveToNextInput(event, 'category')">
+                    </div>
+                    <div class="mb-3">
+                        <label for="category">Category</label>
+                        <input type="text" class="form-control" id="category" required onkeydown="moveToNextInput(event, 'lastLocation')">
+                    </div>
+                    <div class="mb-3">
+                        <label for="lastLocation">Last Location</label>
+                        <input type="text" class="form-control" id="lastLocation" required onkeydown="moveToNextInput(event, 'dateLost')">
+                    </div>
+                    <div class="mb-3">
+                        <label for="dateLost">Date Lost</label>
+                        <input type="date" class="form-control" id="dateLost" required onkeydown="moveToNextInput(event, 'itemDescription')">
+                    </div>
+                    <div class="mb-3">
+                        <label for="itemDescription">Item Description</label>
+                        <textarea class="form-control" id="itemDescription" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="image">Add a Picture (Optional)</label>
+                        <input type="file" class="form-control" id="image">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="submitRequestBtn">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Details Modal -->
+    <div class="modal fade" id="viewDetailsModal" tabindex="-1" aria-labelledby="viewDetailsModalLabel" aria-hidden="true">
+        <!-- Modal content for viewing details of a request -->
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewDetailsModalLabel">Item Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Display details of the selected request -->
+                    <div>
+                        <p id="viewDetailsDateLost"></p>
+                        <p id="viewDetailsItemDescription"></p>
+                        <p id="viewDetailsLastLocation"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Item Modal -->
+    <div class="modal fade" id="editItemModal" tabindex="-1" aria-labelledby="editItemModalLabel" aria-hidden="true">
+        <!-- Modal content for editing details of a request -->
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editItemModalLabel">Edit Item</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form inputs for editing details of the selected request -->
+                    <div class="mb-3">
+                        <label for="editItemName">Item Name</label>
+                        <input type="text" class="form-control" id="editItemName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editItemCategory">Category</label>
+                        <input type="text" class="form-control" id="editItemCategory" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editItemLastLocation">Last Location</label>
+                        <input type="text" class="form-control" id="editItemLastLocation" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editItemDateLost">Date Lost</label>
+                        <input type="date" class="form-control" id="editItemDateLost" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editItemDescription">Item Description</label>
+                        <textarea class="form-control" id="editItemDescription" rows="3" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="saveChangesBtn">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Send Message Modal -->
+    <div class="modal fade" id="sendMessageModal" tabindex="-1" aria-labelledby="sendMessageModalLabel" aria-hidden="true">
+        <!-- Modal content for sending a message to a student -->
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="sendMessageModalLabel">Send Message to Student</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Text area for composing and sending a message -->
+                    <div class="mb-3">
+                        <label for="messageContent">Message:</label>
+                        <textarea class="form-control" id="messageContent" rows="3" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="sendMessageBtn">Send Message</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- modal fade for msg btn-->
+     <div class="modal fade" id="sendMessageModal" tabindex="-1" aria-labelledby="sendMessageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="sendMessageModalLabel">Send Message to Staff</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="messageContent">Message:</label>
+                        <textarea class="form-control" id="messageContent" rows="3" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="sendMessageBtn">Send Message</button>
+    
+                        <label for="image"></label>
+                        <input type="file" class="form-control" id="image">
+            
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript file for handling interactions and functionality -->
+    <script src="staff.js"></script>
+</body>
+
+</html>

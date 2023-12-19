@@ -1,0 +1,81 @@
+#floatingInput{
+    border-radius: 20px;
+    width:400px;
+}
+#floatingPassword{
+    border-radius: 20px;
+    width:400px;
+}
+
+
+#logo{
+   
+   height: 100px;
+}
+#bt1{
+    border-radius: 20px;
+    width:400px;
+    margin-left: 1px;
+    background-color: rgb(208, 0, 0);
+}
+
+.or{
+    width: 70%;
+    height:45px;
+    position: relative;
+    margin-left: 45px;
+    text-align: center;
+}
+
+#bt3{
+    background-color: rgb(208, 0, 0);
+}
+.or::after, .or::before{
+    content:"" ;
+    position: absolute;
+    margin: auto;
+    height: 2px;
+    width: 30%;
+    background: rgb(0, 0, 0);
+    top: 45%;
+    
+
+}
+#btx{
+   background-color:  rgb(208, 0, 0);
+}
+.or::after{
+    left: 0;
+    
+}
+.or::before{
+    right: 0;
+   
+}
+#floatingInput1{
+    border-radius: 20px;
+    width:400px;
+}
+#floatingInput3{
+    border-radius: 20px;
+    width:400px;
+}
+#floatingInput4{
+    border-radius: 20px;
+    width:400px;
+}
+#floatingInput5{
+    border-radius: 20px;
+    width:400px;
+}
+
+#floatingPassword1{
+    border-radius: 20px;
+    width:400px;
+}
+
+#floatingPassword3{
+    border-radius: 20px;
+    width:400px;
+}
+  

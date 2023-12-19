@@ -1,0 +1,77 @@
+.header-bg {
+    background-color: #970b0b;
+}
+
+button {
+    border: none;
+    background: none;
+    color: white;
+    transition: background 0.3s;
+}
+
+.buttons button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+
+.search button.search-btn {
+    border: none;
+    background: none;
+    color: white;
+    transition: background 0.3s;
+}
+
+.search button.search-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.buttons i.bi-person-circle {
+    vertical-align: middle;
+}
+
+.bilgi-logo {
+    height: 100px;
+}
+
+.bg-menu {
+    background-color: #681414;
+}
+
+.col-w-img {
+    background-image: url(img/col-img.jpg);
+    background-size: cover;
+    height: 100vh;  
+}
+
+.search input {
+    border-radius: 200px;
+}
+
+.search input::placeholder {
+    color: #aaa; 
+}
+
+.search button.search-btn {
+    border-radius: 20px;
+    margin-left: 5px; 
+}
+
+.search input:focus::placeholder {
+    color: transparent;
+}
+.custom-btn {
+    background-color: #B11111;
+    border-color: #B11111; 
+    color: white; 
+}
+
+.buttons a:hover {
+    color: #f8f9fa;
+    text-decoration: underline;
+}
+.buttons a {
+    color: white;
+    text-decoration: none;
+    margin-right: 10px; /* Add right margin for spacing */
+    transition: color 0.3s ease;
+}
